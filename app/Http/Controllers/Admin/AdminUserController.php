@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserAuthMaster;
-use App\Models\District;
 use App\Models\State;
-use App\Models\Talukas;
-use App\Models\Pincode;
+use App\Models\City;
 use Response;
 use Validator;
 use Illuminate\Support\Facades\Session;
@@ -125,6 +123,7 @@ class AdminUserController extends Controller
         $user->save();
         return Response::json(['result' => true,'message'=>__('messages.admin.user.edit_user_success')]);
     }
+
     public function user_data_edit($id)
     {       
         $UserData=User::where('id',$id)->first();
@@ -132,8 +131,10 @@ class AdminUserController extends Controller
 
         // echo "<pre>";
         // print_r($data); die;
-     
-        return view('admin.user.edit',compact('UserData'));
+        $stateData['state'] = State::orderBy('state_name')->get();
+        $cityData['city'] = City::where('state_id',$UserData->state_id)->orderBy('city_name')->get();
+        // dd($cityData);
+        return view('admin.user.edit',compact('UserData','stateData','cityData'));
     
         // return view('admin.user.edit')->with(['UserData' => $data]);
     }
@@ -176,7 +177,9 @@ class AdminUserController extends Controller
         // print_r($result);
         // echo "</pre>";die;
         // $data['state'] = State::orderBy('state_name')->where('state_status',0)->get();
-        return view('admin.user.adduser');
+
+        $stateData['state'] = State::orderBy('state_name')->get();
+        return view('admin.user.adduser',compact('stateData'));
 
         // return view('admin.user.adduser',$result);
         
@@ -185,6 +188,7 @@ class AdminUserController extends Controller
     public function saveuser(Request $request)
     {
         $userData = $request->all();
+        // dd($userData);
         $message="";
         $imageurl = '';
         if($userData['id'] !=''){
@@ -218,12 +222,12 @@ class AdminUserController extends Controller
                     $imageurl =$user->imageurl;
                 }
                 $userData['imageurl'] = $imageurl;
-                if($request->password !=''){
-                    $userData['password'] = Hash::make($request->password);
-                }
-                else{
-                    $userData['password'] = $user->password;
-                }
+                // if($request->password !=''){
+                //     $userData['password'] = Hash::make($request->password);
+                // }
+                // else{
+                //     $userData['password'] = $user->password;
+                // }
                 $user = User::find($userData['id']);
                 $user->fill($userData);
                 $user->save();
@@ -255,10 +259,10 @@ class AdminUserController extends Controller
                     $imageurl =$request->image64;
                 }
                 $userData['imageurl'] = $imageurl;
-                $userData['login_type'] = 2;
+                // $userData['login_type'] = 2;
                 // echo "<pre>";
                 // print_r($userData);die;
-                $userData['password'] = Hash::make($request->password);
+                // $userData['password'] = Hash::make($request->password);
                 $user = User::create($userData);
                 $token = $user->createToken(env('APP_NAME'));
                 $user->token = $token->accessToken;
@@ -351,5 +355,15 @@ class AdminUserController extends Controller
                 $text = "Deleted";
 			}
         return Response::json(['result' => true,'message'=>$msg,'text' =>$text]);
+    }
+    //change by khushboo
+    public function fetchCity(Request $request)
+    {
+        // dd($request);
+        // exit;
+        $data['city'] = City::where("state_id", $request->state_id)
+                                ->get(["city_name", "city_id"]);
+  
+        return response()->json($data);
     }
 }

@@ -46,86 +46,17 @@ Auth::routes();
 
     // Route::get('/userregister',     [Main::class, 'userregister'])->name('userregister');
 
-    Route::get('/get-dropdown-options',[Main::class,'getDropdownOptions']);
-    Route::get('/get-dropdown-taluka-options',[Main::class,'getDropdownTalukaOptions']);
-    Route::get('/get-dropdown-pincode-options',[Main::class,'getDropdownPincodeOptions']);
-    Route::get('/get-dropdown-product-options',[Main::class,'getDropdownProductOptions']);
-
-    Route::get('/productsearch', [Main::class, 'productsearch'])->name('productsearch');
-    // Route::get('/productlist/{type}/{id}',[Main::class,'productlist']);
-    Route::get('/productlist', [Main::class,'productlist'])->name('productlist');    
- 
-    // Route::get('/subproductlist/{id}',[Main::class,'subproductlist']);
-    Route::get('/productdetails/{id}',[Main::class,'productdetails']);
-    Route::post('changeprice',[Main::class,'changeprice']);
-
-    Route::post('/checkstock',[Main::class,'checkstock']);
-    
-    Route::get('/testimonialList',[Main::class,'testimonialList']);
-    Route::get('/blogDetails/{id}',[Main::class,'blogDetails']);
-
-    Route::get('testimonialList/get-options',[Main::class,'getOptions']);
-    Route::get('testimonialList/get-taluka-options',[Main::class,'getTalukaOptions']);
-    Route::get('testimonialList/get-pincode-options',[Main::class,'getPincodeOptions']);
-    Route::get('testimonialList/get-product-options',[Main::class,'getProductOptions']);
-    Route::post('testimonialList/filterproductdata',[Main::class,'filterproductdata']);
-    Route::post('testimonialList/filterregiondata',[Main::class,'filterregiondata']);
-
-    Route::get('aboutus',[Main::class,'aboutus']);
-    Route::get('privacypolicy',[Main::class,'privacypolicy']);
-    Route::get('contactus',[Main::class,'contactus']);    
-    Route::get('codpolicy',[Main::class,'codpolicy']);
-    Route::get('shippingpolicy',[Main::class,'shippingpolicy']);
-    Route::get('termsandconditions',[Main::class,'termsandconditions']);
-    Route::get('refundexchangepolicy',[Main::class,'refundexchangepolicy']);
-    Route::get('faq',[Main::class,'faq']);
-    
     
    
     // Route::get('/thankyou',[Main::class,'thankyou']);
 Route::middleware('auth','preventBackHistoryWeb')->group( function () {
     // event  
     Route::get('/webhome',     [WebHomeController::class, 'index'])->name('webhome');
-    Route::get('/userProfile',     [WebHomeController::class, 'userProfile'])->name('userProfile');
-    
+    Route::get('/userProfile',     [WebHomeController::class, 'userProfile'])->name('userProfile');    
     Route::post('/saveProfile',     [WebHomeController::class, 'saveProfile'])->name('saveProfile');
     // Route::get('/productlist/{id}',[WebHomeController::class,'productlist']);
     // Route::get('/productdetails/{id}',[WebHomeController::class,'productdetails']);
-    Route::get('/thankyou',[WebHomeController::class,'thankyou']);
-    Route::get('/cart',     [WebHomeController::class, 'cart'])->name('cart');
-    Route::post('/addtocart',[WebHomeController::class,'addtocart']);
-    Route::post('/addorder',[WebHomeController::class,'addorder']);
-    
-    Route::post('/ratings', [WebHomeController::class, 'ratingstore'])->name('ratings.store');
-    
-    Route::get('/addressform',     [WebHomeController::class, 'addressform'])->name('addressform');
-    Route::post('/addAddress',[WebHomeController::class,'addAddress'])->name('addAddress'); 
-    Route::get('/myaddress',[WebHomeController::class,'myaddress'])->name('myaddress');
-    Route::get('/checkout',[WebHomeController::class,'checkout']); 
-    Route::get('/orderthankyou',[WebHomeController::class,'orderthankyou']); 
-    Route::get('/myorder',[WebHomeController::class,'myorder']);   
-    Route::get('/orderdetails/{id}',[WebHomeController::class,'orderdetails']);  
-    Route::post('/DeleteAddress',[WebHomeController::class,'DeleteAddress']); 
-    Route::get('myaddress/edit/{id}',   [WebHomeController::class, 'edit_address'])->name('edit_address');
-    Route::post('/deletecart',[WebHomeController::class,'deletecart']);
-    Route::post('/clearcart',[WebHomeController::class,'clearcart']);
-    
-    // Route::get('/testimonialList',[WebHomeController::class,'testimonialList']);
-    Route::post('/ordercancle',[WebHomeController::class,'ordercancle']);
-    Route::post('/updatequantity',[WebHomeController::class,'updatequantity']);
-    
-    
-    
-    //wishlist    
-    Route::post('/WishListAdd',[WebHomeController::class,'WishListAdd']);
-    Route::get('/wishlist',[WebHomeController::class,'wishlist']);
-
-
-    //WalletHistory
-    Route::get('wallethistory',  [WebHomeController::class,'wallethistory']); 
-    Route::get('add_wallet_money',  [WebHomeController::class,'add_wallet_money']);
-    Route::post('addmoney',  [WebHomeController::class,'addmoney']);  
-    
+   
 });
 
 Route::group(['prefix' => 'admin'], function () {
@@ -150,7 +81,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/user_delete',    [AdminUserController::class, 'user_delete'])->name('admin.delete-user');
         Route::post('/user_status',  [AdminUserController::class, 'user_status'])->name('admin.user_status');
         Route::post('/user_verified',  [AdminUserController::class, 'user_verified'])->name('admin.user_verified');
-        
+        //route set by khushboo
+        Route::post('/fetch_city', [AdminUserController::class, 'fetchCity'])->name('admin.fetch_city');
 
         Route::post('/user_multi_status', [AdminUserController::class, 'user_multi_status'])->name('admin.user_multi_status');
 
@@ -204,6 +136,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('subadmin/edit/{id}',   [SubAdminController::class, 'subadmin_data_edit'])->name('subadmindataedit');
         Route::get('subadminfile-export',   [SubAdminController::class, 'subadminfileexport'])->name('subadminfile-export');  
           
+        
          
     
     });

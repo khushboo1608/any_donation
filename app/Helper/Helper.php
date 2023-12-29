@@ -188,5 +188,26 @@ class Helper
 		return $SubCategoryData;
 	}
 
+	public static function AppMapKey()
+	{
+		$setting =  Settings::first();
+		if(isset($setting->map_api_key))
+		{
+			if($setting->map_api_key !='')
+			{
+				$map_key = $setting->map_api_key;
+			}
+			else
+			{	
+				$map_key = env('APP_MAP_KEY');
+			}
+		}
+		else
+		{
+			$map_key = env('APP_MAP_KEY');
+		}
+		return $map_key;
+	}
+
 }
 ?>

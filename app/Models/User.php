@@ -65,4 +65,9 @@ class User extends Authenticatable
     public function UserAuthMaster() {
         return $this->hasMany('App\Models\UserAuthMaster', 'user_id', 'id');
     }
+
+    public function StateData() {
+        return $this->hasOne('App\Models\State', 'state_id', 'state_id');
+    }
+
 }
