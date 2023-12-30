@@ -36,7 +36,8 @@ class CreateUsersTable extends Migration
             $table->string('type_of_ngo')->nullable();
             $table->string('type_of_blood_bank')->nullable();
             $table->string('blood_bank_history')->nullable();
-            $table->tinyInteger('is_disable')->default(0)->comment('0: enable, 1:disable');                   
+            $table->tinyInteger('is_disable')->default(0)->comment('0: enable, 1:disable');      
+            $table->tinyInteger('is_approved')->default(0)->comment('0: pending, 1:approve');               
             $table->rememberToken();
             $table->timestamps();
         });

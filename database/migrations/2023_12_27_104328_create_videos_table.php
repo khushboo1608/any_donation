@@ -15,9 +15,9 @@ class CreateVideosTable extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->string('video_id')->unique()->primary();
-            $table->string('ngo_bank_id');
+            $table->integer('user_id');
             $table->string('video_url');
-            $table->tinyInteger('video_type')->default(0)->comment('1: ngo, 2: blood_bank ');          
+            $table->tinyInteger('video_type')->default(0)->comment('3: ngo, 4: blood_bank');          
             $table->tinyInteger('video_status')->default(0)->comment('0: enable, 1:disable'); 
             $table->timestamps();
         });

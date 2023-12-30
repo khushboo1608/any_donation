@@ -36,7 +36,16 @@
               </div>
               <div class="col-md-12 col-xs-12">
                     <div class="search_list">
+                        <?php  $type =  request()->type; ?>
+                        @if(isset($type) && $type !='') 
+                        @if($type ==0)
                           <a href="{{url('admin/user')}}"><button type="button"  class="btn btn-primary waves-effect waves-light"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</button></a>                        
+                        @elseif($type ==1)
+                          <a href="{{url('admin/userngo')}}"><button type="button"  class="btn btn-primary waves-effect waves-light"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</button></a>
+                        @elseif($type ==2)
+                          <a href="{{url('admin/userblood')}}"><button type="button"  class="btn btn-primary waves-effect waves-light"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</button></a>
+                        @endif
+                        @endif                         
                     </div>
                 </div>    
               </div>
@@ -58,7 +67,7 @@
               <input type="hidden" name="id" id="id" value="">   
                 <div class="card-body">
 
-                <div class="form-group row">
+                <div class="form-group row login_type">
                     <label for="name" class="col-sm-2 col-form-label">User Type :-</label>
                     <div class="col-sm-6">
                       <select name="login_type" id="login_type"  class="form-control" required="true">
@@ -120,6 +129,39 @@
                     </div>
                   </div>
 
+                  <div class="form-group row type_of_ngo" style="display:none;">
+                    <label for="type_of_ngo" class="col-sm-2 col-form-label">Type of NGO :-</label>
+                    <div class="col-sm-6">
+                      <select name="type_of_ngo" id="type_of_ngo"  class="form-control" >
+                        <option value="">--Select Type NGO--</option>
+                        <option value="International NGOs">International NGOs</option>
+                        <option value="National NGOs">National NGOs</option>
+                        <option value="Citywide organizations">Citywide organizations</option>
+                        <option value="Advocacy NGOs">Advocacy NGOs</option>
+                        <option value="Charitable orientation">Charitable orientation</option>
+                        <option value="Civil society">Civil society</option>
+                        <option value="Participatory orientation">Participatory orientation</option>
+                        <option value="Greenpeace">Greenpeace</option>
+                        <option value="Oxfam international">Oxfam international</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row type_of_blood_bank" style="display:none;">
+                    <label for="type_of_blood_bank" class="col-sm-2 col-form-label">Type of Blood :-</label>
+                    <div class="col-sm-6">
+                      <select name="type_of_blood_bank" id="type_of_blood_bank"  class="form-control" >
+                        <option value="">--Select Type blood--</option>
+                        <option value="O negative">O negative</option>
+                        <option value="A negative">A negative</option>
+                        <option value="B negative">B negative</option>
+                        <option value="AB negative">AB negative</option>
+                      </select>
+                    </div>
+                  </div>
+
+
+
                   <div class="form-group row">
                     <label for="state_id" class="col-sm-2 col-form-label">State Name :-</label>
                     <div class="col-sm-6">
@@ -143,6 +185,13 @@
                     </div>
                   </div>
 
+                  <div class="form-group row blood_bank_history" style="display:none;">
+                    <label for="blood_bank_history" class="col-sm-2 col-form-label">History :-</label>
+                    <div class="col-sm-6">
+                    <input id="blood_bank_history" name="blood_bank_history" value="" type="text" class="form-control" >
+                    </div>
+                  </div>
+
 
                   <div class="form-group row">
                     <label for="gender" class="col-sm-2 col-form-label">Gender :-</label>
@@ -152,21 +201,21 @@
                     </div>
                   </div>
                   
-                  <div class="form-group row">
+                  <div class="form-group row profession" style="display:none;">
                     <label for="profession" class="col-sm-2 col-form-label">Profession :-</label>
                     <div class="col-sm-6">
-                    <input id="profession" name="profession" value="" type="text" class="form-control" required="true">
+                    <input id="profession" name="profession" value="" type="text" class="form-control" >
                     </div>
                   </div>
 
-                  <div class="form-group row">
+                  <div class="form-group row blood_group" style="display:none;">
                     <label for="blood_group" class="col-sm-2 col-form-label">Blood Group :-</label>
                     <div class="col-sm-6">
-                    <input id="blood_group" name="blood_group" value="" type="text" class="form-control" required="true">
+                    <input id="blood_group" name="blood_group" value="" type="text" class="form-control" >
                     </div>
                   </div>
                   
-                  <div class="form-group row">
+                  <div class="form-group row is_interested" style="display:none;">
                     <label for="is_interested" class="col-sm-2 col-form-label">Interested in Blood Donation* :-</label>
                     <div class="col-sm-6">
                       <input type="radio" name="is_interested" id="is_interested" value="1" > Yes
@@ -177,7 +226,18 @@
                   <div class="form-group row">
                       <div class="col-sm-6 col-md-offset-3 text-center">
                         <button type="submit" name="submit" class="btn btn-primary">Save</button>
+                        
+                        <?php  $type =  request()->type; ?>
+                        @if(isset($type) && $type !='') 
+                        @if($type ==0)
                         <a class="btn btn-danger" href="{{url('admin/user')}}">Cancel</a>
+                        @elseif($type ==1)
+                        <a class="btn btn-danger" href="{{url('admin/userngo')}}">Cancel</a>
+                        @elseif($type ==2)
+                        <a class="btn btn-danger" href="{{url('admin/userblood')}}">Cancel</a>
+                        @endif
+                        @endif
+
                       </div>
                   </div>
                 </div>
@@ -226,6 +286,43 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key={{Helper::AppMapKey()}}&callback=initMap"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(e) {
+  $(".login_type").change(function(){
+    var type=$("#login_type").val();
+    // alert(type);
+    if(type == 2)
+    {
+      $(".profession").show();
+      $(".blood_group").show();
+      $(".is_interested").show();
+      $(".type_of_ngo").hide();
+      $(".type_of_blood_bank").hide();
+      $(".blood_bank_history").hide();
+  
+    }else if(type == 3)
+    {
+      $(".profession").hide();
+      $(".blood_group").hide();
+      $(".is_interested").hide();
+      $(".type_of_ngo").show();
+      $(".type_of_blood_bank").hide();
+      $(".blood_bank_history").hide();
+    }else if(type == 4)
+    {
+      $(".profession").hide();
+      $(".blood_group").hide();
+      $(".is_interested").hide();
+      $(".type_of_ngo").hide();
+      $(".type_of_blood_bank").show();
+      $(".blood_bank_history").show();
+    }
+  });
+});
+</script>
+
 <script type="text/javascript">
   $(document).on('click', '.remove_activity', function() {
       $(this).closest('.row').remove();

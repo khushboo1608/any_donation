@@ -40,7 +40,8 @@ class User extends Authenticatable
         'type_of_ngo',
         'type_of_blood_bank',
         'blood_bank_history',
-        'is_disable'
+        'is_disable',
+        'is_approved'
     ];
 
     /**

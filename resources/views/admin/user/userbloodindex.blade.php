@@ -43,7 +43,7 @@
                 <div class="col-md-12 col-xs-12">
                     <div class="search_list">
                         <div class="add_btn_primary">
-                            <a href="{{url('admin/add_user/0')}}">Add User</a> &nbsp;&nbsp;
+                            <a href="{{url('admin/add_user/2')}}">Add User</a> &nbsp;&nbsp;
                         </div>
                     </div>
                 </div>   
@@ -148,7 +148,7 @@
           processing: true,
           serverSide: true,
          
-          ajax: "{{url('admin/user') }}",
+          ajax: "{{url('admin/userblood') }}",
           "order": [[ 1, 'asc' ]],
           columns: [
             {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},

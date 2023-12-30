@@ -15,9 +15,15 @@ class Videos extends Model
 
     protected $fillable = [
         'video_id',
-        'ngo_bank_id',
+        'user_id',
         'video_url',
         'video_type',
         'video_status'           
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(App\Model\User::class, 'user_id');
+    }
+    
 }

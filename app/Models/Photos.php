@@ -15,11 +15,16 @@ class Photos extends Model
 
     protected $fillable = [
         'photo_id',
-        'ngo_bank_id',
+        'user_id',
         'photo_name',
         'photo_url',
         'photo_type',
         'photo_status'
            
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(App\Model\User::class, 'user_id');
+    }
 }

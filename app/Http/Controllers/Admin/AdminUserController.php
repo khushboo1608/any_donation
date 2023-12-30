@@ -69,16 +69,31 @@ class AdminUserController extends Controller
                 }               
                 return $btn1;
             })
+            ->addColumn('is_approved', function ($data) {
+                $btn1='';
+                $checked = ($data['is_approved'] == 1) ? "" : "checked";
+                $title =  ($data['is_approved'] == 0) ? "Unapprove" : "Approve";
+                if($data['is_approved'] == 0){
+                    $btn1 = '<button type="button"  class="btn btn-danger btn-sm" onclick="isApproved(\''.$data->id.'\','.$data->is_approved.')">'.$title.' </i>
+                    </button>';
+                }
+                else{
+                    $btn1 = '<button type="button"  class="btn btn-success btn-sm" onclick="isApproved(\''.$data->id.'\','.$data->is_approved.')" >'.$title.' </i>
+                    </button>';  
+                }               
+                return $btn1;
+            })
             ->addColumn('action', function($data){
 
                 $url=route("admin.user");
-                $btn = '<a href="'.$url.'/edit/'.$data->id.'" style="color: white !important" ><button type="button" class="edit btn btn-primary btn-sm editPost"  title="edit"><i class="fa fa-edit"></i>
+                $userrole = 0;
+                $btn = '<a href="'.$url.'/edit/'.$data->id.'/'.$userrole.'" style="color: white !important" ><button type="button" class="edit btn btn-primary btn-sm editPost"  title="edit"><i class="fa fa-edit"></i>
                 </button></a>&nbsp;&nbsp;<button type="button"  class="btn btn-danger btn-sm deletePost" onclick="DeleteUser(\''.$data->id.'\')" title="edit"><i class="fa fa-trash"></i>
                 </button>';
 
                  return $btn;
          })
-            ->rawColumns(['action','is_disable', 'checkbox','is_verified'])
+            ->rawColumns(['action','is_disable', 'checkbox','is_verified','is_approved'])
             ->make(true);
         }
         return view('admin.user.index');
@@ -189,6 +204,16 @@ class AdminUserController extends Controller
     {
         $userData = $request->all();
         // dd($userData);
+        // exit;
+        // if($request->login_type == 2)
+        //         {
+        //           echo  $userData['is_approved'] = 1;
+        //         }else{
+        //           echo  $userData['is_approved'] = 0;
+        //         }
+
+        // dd($userData);
+        // exit;
         $message="";
         $imageurl = '';
         if($userData['id'] !=''){
@@ -259,6 +284,13 @@ class AdminUserController extends Controller
                     $imageurl =$request->image64;
                 }
                 $userData['imageurl'] = $imageurl;
+
+                if($request->login_type == 2)
+                {
+                    $userData['is_approved'] = 1;
+                }else{
+                    $userData['is_approved'] = 0;
+                }
                 // $userData['login_type'] = 2;
                 // echo "<pre>";
                 // print_r($userData);die;
@@ -280,9 +312,14 @@ class AdminUserController extends Controller
             }
         } 
 
-        Session::flash('message', $message);      
-        return redirect('admin/user');
-
+        Session::flash('message', $message);
+        if($request->type == 0){
+            return redirect('admin/user');
+        }else if($request->type == 1){
+            return redirect('admin/userngo');
+        }else if($request->type == 2){
+            return redirect('admin/userblood');
+        }      
     }
 
     public function user_status(Request $request)
@@ -325,6 +362,26 @@ class AdminUserController extends Controller
         return Response::json(['result' => true,'message'=>$msg,'text' =>$text]);
     }
 
+    public function user_approved(Request $request)
+    {
+        // echo $request->is_disable;die;
+        $user_id  = $request->id;
+        User::where('id',$user_id )->update(['is_approved' => $request->is_approved]);
+
+        if($request->is_approved == 1)
+        {
+            $msg = __('Enable successfully');
+            $text = "Enabled";
+        }
+        else
+        {
+            $msg = __('Disable successfully');
+            $text = "Disabled";
+           
+        }
+        return Response::json(['result' => true,'message'=>$msg,'text' =>$text]);
+    }
+    
     public function userfileexport() 
     {
         return Excel::download(new UserDataExport, 'user-data-collection.xlsx');
@@ -365,5 +422,157 @@ class AdminUserController extends Controller
                                 ->get(["city_name", "city_id"]);
   
         return response()->json($data);
+    }
+
+    // userngo_index
+
+    public function userngo_index(Request $request)
+    {
+        if ($request->ajax()) {
+            // print_r($data); die;
+            return datatables()::of($this->dataTable->userngo($request))
+            ->addColumn('checkbox', function ($data) {
+                return '<input type="checkbox" id="checkbox'.$data->id.'"  value="'.$data->id.'"  name="user_ids[]" class="user_ids" />';
+            })
+            ->editColumn('imageurl', function ($data) {
+                $imageurl = $this->GetImage($file_name = $data->imageurl,$path=config('global.file_path.user_profile'));
+                
+                if($imageurl == '')
+                {
+                    $imageurl = config('global.no_image.no_user');
+                }
+                return $imageurl;
+            })
+            ->addColumn('is_verified', function ($data) {
+                $btn1='';
+                $checked = ($data['is_verified'] == 1) ? "" : "checked";
+                $title =  ($data['is_verified'] == 0) ? "Disable" : "Enable";
+                if($data['is_verified'] == 0){
+                    $btn1 = '<button type="button"  class="btn btn-danger btn-sm" onclick="isverify(\''.$data->id.'\','.$data->is_verified.')">'.$title.' </i>
+                    </button>';
+                }
+                else{
+                    $btn1 = '<button type="button"  class="btn btn-success btn-sm" onclick="isverify(\''.$data->id.'\','.$data->is_verified.')" >'.$title.' </i>
+                    </button>';  
+                }               
+                return $btn1;
+            })
+            ->addColumn('is_disable', function ($data) {
+                $btn1='';
+                $checked = ($data['is_disable'] == 1) ? "" : "checked";
+                $title =  ($data['is_disable'] == 1) ? "Disable" : "Enable";
+                if($data['is_disable'] == 1){
+                    $btn1 = '<button type="button"  class="btn btn-danger btn-sm" onclick="Status(\''.$data->id.'\','.$data->is_disable.')">'.$title.' </i>
+                    </button>';
+                }
+                else{
+                    $btn1 = '<button type="button"  class="btn btn-success btn-sm" onclick="Status(\''.$data->id.'\','.$data->is_disable.')" >'.$title.' </i>
+                    </button>';  
+                }               
+                return $btn1;
+            })
+            ->addColumn('is_approved', function ($data) {
+                $btn1='';
+                $checked = ($data['is_approved'] == 1) ? "" : "checked";
+                $title =  ($data['is_approved'] == 0) ? "Unapprove" : "Approve";
+                if($data['is_approved'] == 0){
+                    $btn1 = '<button type="button"  class="btn btn-danger btn-sm" onclick="isApproved(\''.$data->id.'\','.$data->is_approved.')">'.$title.' </i>
+                    </button>';
+                }
+                else{
+                    $btn1 = '<button type="button"  class="btn btn-success btn-sm" onclick="isApproved(\''.$data->id.'\','.$data->is_approved.')" >'.$title.' </i>
+                    </button>';  
+                }               
+                return $btn1;
+            })
+            ->addColumn('action', function($data){
+
+                $url=route("admin.user");
+                $userrole = 1;
+                $btn = '<a href="'.$url.'/edit/'.$data->id.'/'.$userrole.'" style="color: white !important" ><button type="button" class="edit btn btn-primary btn-sm editPost"  title="edit"><i class="fa fa-edit"></i>
+                </button></a>&nbsp;&nbsp;<button type="button"  class="btn btn-danger btn-sm deletePost" onclick="DeleteUser(\''.$data->id.'\')" title="edit"><i class="fa fa-trash"></i>
+                </button>';
+
+                 return $btn;
+         })
+            ->rawColumns(['action','is_disable', 'checkbox','is_verified','is_approved'])
+            ->make(true);
+        }
+        return view('admin.user.userngoindex');
+    }
+
+    public function userblood_index(Request $request)
+    {
+        if ($request->ajax()) {
+            // print_r($data); die;
+            return datatables()::of($this->dataTable->userblood($request))
+            ->addColumn('checkbox', function ($data) {
+                return '<input type="checkbox" id="checkbox'.$data->id.'"  value="'.$data->id.'"  name="user_ids[]" class="user_ids" />';
+            })
+            ->editColumn('imageurl', function ($data) {
+                $imageurl = $this->GetImage($file_name = $data->imageurl,$path=config('global.file_path.user_profile'));
+                
+                if($imageurl == '')
+                {
+                    $imageurl = config('global.no_image.no_user');
+                }
+                return $imageurl;
+            })
+            ->addColumn('is_verified', function ($data) {
+                $btn1='';
+                $checked = ($data['is_verified'] == 1) ? "" : "checked";
+                $title =  ($data['is_verified'] == 0) ? "Disable" : "Enable";
+                if($data['is_verified'] == 0){
+                    $btn1 = '<button type="button"  class="btn btn-danger btn-sm" onclick="isverify(\''.$data->id.'\','.$data->is_verified.')">'.$title.' </i>
+                    </button>';
+                }
+                else{
+                    $btn1 = '<button type="button"  class="btn btn-success btn-sm" onclick="isverify(\''.$data->id.'\','.$data->is_verified.')" >'.$title.' </i>
+                    </button>';  
+                }               
+                return $btn1;
+            })
+            ->addColumn('is_disable', function ($data) {
+                $btn1='';
+                $checked = ($data['is_disable'] == 1) ? "" : "checked";
+                $title =  ($data['is_disable'] == 1) ? "Disable" : "Enable";
+                if($data['is_disable'] == 1){
+                    $btn1 = '<button type="button"  class="btn btn-danger btn-sm" onclick="Status(\''.$data->id.'\','.$data->is_disable.')">'.$title.' </i>
+                    </button>';
+                }
+                else{
+                    $btn1 = '<button type="button"  class="btn btn-success btn-sm" onclick="Status(\''.$data->id.'\','.$data->is_disable.')" >'.$title.' </i>
+                    </button>';  
+                }               
+                return $btn1;
+            })
+            ->addColumn('is_approved', function ($data) {
+                $btn1='';
+                $checked = ($data['is_approved'] == 1) ? "" : "checked";
+                $title =  ($data['is_approved'] == 0) ? "Unapprove" : "Approve";
+                if($data['is_approved'] == 0){
+                    $btn1 = '<button type="button"  class="btn btn-danger btn-sm" onclick="isApproved(\''.$data->id.'\','.$data->is_approved.')">'.$title.' </i>
+                    </button>';
+                }
+                else{
+                    $btn1 = '<button type="button"  class="btn btn-success btn-sm" onclick="isApproved(\''.$data->id.'\','.$data->is_approved.')" >'.$title.' </i>
+                    </button>';  
+                }               
+                return $btn1;
+            })
+            ->addColumn('action', function($data){
+
+                $url=route("admin.user");
+                $userrole = 2;
+                $btn = '<a href="'.$url.'/edit/'.$data->id.'/'.$userrole. '" style="color: white !important" ><button type="button" class="edit btn btn-primary btn-sm editPost"  title="edit"><i class="fa fa-edit"></i>
+                </button></a>&nbsp;&nbsp;<button type="button"  class="btn btn-danger btn-sm deletePost" onclick="DeleteUser(\''.$data->id.'\')" title="edit"><i class="fa fa-trash"></i>
+                </button>';
+
+                 return $btn;
+         })
+            ->rawColumns(['action','is_disable', 'checkbox','is_verified','is_approved'])
+            ->make(true);
+        }
+        return view('admin.user.userbloodindex');
     }
 }

@@ -36,14 +36,34 @@
               </div>
               <div class="col-md-12 col-xs-12">
                     <div class="search_list">
+                    <?php  $type =  request()->type; ?>
+                        @if(isset($type) && $type !='') 
+                        @if($type ==0)
                           <a href="{{url('admin/user')}}"><button type="button"  class="btn btn-primary waves-effect waves-light"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</button></a>                        
-                    </div>
+                        @elseif($type ==1)
+                          <a href="{{url('admin/userngo')}}"><button type="button"  class="btn btn-primary waves-effect waves-light"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</button></a>
+                        @elseif($type ==2)
+                          <a href="{{url('admin/userblood')}}"><button type="button"  class="btn btn-primary waves-effect waves-light"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</button></a>
+                        @endif
+                        @endif  
+                      </div>
                 </div>    
               </div>
               
               <!-- /.card-header -->
               <div class="card-body">
               <form class="form-horizontal" action="{{route('user.saveuser')}}" method="post" enctype="multipart/form-data">
+              @if(isset($type) && $type !='') 
+              @if($type ==0)
+              <input type="hidden" name="type" id="type"  value="0">                           
+              @elseif($type ==1)
+              <input type="hidden" name="type" id="type"  value="1">   
+              @elseif($type ==2)
+              <input type="hidden" name="type" id="type"  value="2">   
+              @endif
+              @endif  
+
+
               @csrf
               @if (session('message'))
                 <div class="alert alert-success">
@@ -58,7 +78,7 @@
               <input type="hidden" name="id" id="id"  value="{{$UserData->id}}">   
                 <div class="card-body">
 
-                  <div class="form-group row">
+                  <div class="form-group row login_type">
                     <label for="name" class="col-sm-2 col-form-label">User Type :-</label>
                     <div class="col-sm-6">
                       <select name="login_type" id="login_type"  class="form-control" required="true">
@@ -103,7 +123,7 @@
                                 @if($UserData->imageurl !='')
                             <div class="fileupload_img"><img type="image" src="{{$UserData->imageurl}}" style="height: 80px;width: 80px;margin-left: 20px;"/></div>
                             @else
-                            <div class="fileupload_img"><img type="image" src="{{config('global.no_image.add_image');}}" /></div>
+                            <div class="fileupload_img"><img type="image" src="{{config('global.no_image.add_image')}}" /></div>
                             @endif
                           @endif
                       </div>
@@ -122,10 +142,77 @@
                     <div class="col-md-6">
                       <input type="text"  name="address" id="address" value="{{$UserData->address}}" class="form-control" required>
                       <div id="map" style="display: none"></div>
-                            <input type="hidden" name="lat" id="latitude">
-                            <input type="hidden" name="long" id="longitude">
+                            <input type="hidden" name="lat" id="latitude" value="{{$UserData->lat}}">
+                            <input type="hidden" name="long" id="longitude" value="{{$UserData->long}}">
                     </div>
                   </div>
+                  <!-- {{ $UserData->type_of_ngo }} -->
+                  @if($UserData->login_type == 3)
+                  
+                  <div class="form-group row">
+                    <label for="type_of_ngo" class="col-sm-2 col-form-label">Type of NGO :-</label>
+                    <div class="col-sm-6">
+                      <select name="type_of_ngo" id="type_of_ngo"  class="form-control" >
+                        <option value="">--Select Type NGO--</option>
+                        <option value="International NGOs" {{ $UserData->type_of_ngo == 'International NGOs' ? 'selected' : '' }}>International NGOs</option>
+                        <option value="National NGOs" {{ $UserData->type_of_ngo == 'National NGOs' ? 'selected' : '' }} >National NGOs</option>
+                        <option value="Citywide organizations" {{ $UserData->type_of_ngo == 'Citywide organizations' ? 'selected' : '' }} >Citywide organizations</option>
+                        <option value="Advocacy NGOs" {{ $UserData->type_of_ngo == 'Advocacy NGOs' ? 'selected' : '' }}>Advocacy NGOs</option>
+                        <option value="Charitable orientation" {{ $UserData->type_of_ngo == 'Charitable orientation' ? 'selected' : '' }} >Charitable orientation</option>
+                        <option value="Civil society" {{ $UserData->type_of_ngo == 'Civil society' ? 'selected' : '' }} >Civil society</option>
+                        <option value="Participatory orientation" {{ $UserData->type_of_ngo == 'Participatory orientation' ? 'selected' : '' }} >Participatory orientation</option>
+                        <option value="Greenpeace" {{ $UserData->type_of_ngo == 'Greenpeace' ? 'selected' : '' }}>Greenpeace</option>
+                        <option value="Oxfam international" {{ $UserData->type_of_ngo == 'Oxfam international' ? 'selected' : '' }} >Oxfam international</option>
+                      </select>
+                    </div>
+                  </div>
+                  @else
+                  <div class="form-group row type_of_ngo" style="display:none;">
+                    <label for="type_of_ngo" class="col-sm-2 col-form-label">Type of NGO :-</label>
+                    <div class="col-sm-6">
+                      <select name="type_of_ngo" id="type_of_ngo"  class="form-control" >
+                        <option value="">--Select Type NGO--</option>
+                        <option value="International NGOs" {{ $UserData->type_of_ngo == 'International NGOs' ? 'selected' : '' }}>International NGOs</option>
+                        <option value="National NGOs" {{ $UserData->type_of_ngo == 'National NGOs' ? 'selected' : '' }} >National NGOs</option>
+                        <option value="Citywide organizations" {{ $UserData->type_of_ngo == 'Citywide organizations' ? 'selected' : '' }} >Citywide organizations</option>
+                        <option value="Advocacy NGOs" {{ $UserData->type_of_ngo == 'Advocacy NGOs' ? 'selected' : '' }}>Advocacy NGOs</option>
+                        <option value="Charitable orientation" {{ $UserData->type_of_ngo == 'Charitable orientation' ? 'selected' : '' }} >Charitable orientation</option>
+                        <option value="Civil society" {{ $UserData->type_of_ngo == 'Civil society' ? 'selected' : '' }} >Civil society</option>
+                        <option value="Participatory orientation" {{ $UserData->type_of_ngo == 'Participatory orientation' ? 'selected' : '' }} >Participatory orientation</option>
+                        <option value="Greenpeace" {{ $UserData->type_of_ngo == 'Greenpeace' ? 'selected' : '' }}>Greenpeace</option>
+                        <option value="Oxfam international" {{ $UserData->type_of_ngo == 'Oxfam international' ? 'selected' : '' }} >Oxfam international</option>
+                      </select>
+                    </div>
+                  </div>
+                  @endif
+
+                  @if($UserData->login_type == 4)
+                  <div class="form-group row">
+                    <label for="type_of_blood_bank" class="col-sm-2 col-form-label">Type of Blood :-</label>
+                    <div class="col-sm-6">
+                      <select name="type_of_blood_bank" id="type_of_blood_bank"  class="form-control" >
+                        <option value="">--Select Type blood--</option>
+                        <option value="O negative" {{ $UserData->type_of_blood_bank == 'O negative' ? 'selected' : '' }}>O negative</option>
+                        <option value="A negative" {{ $UserData->type_of_blood_bank == 'A negative' ? 'selected' : '' }}>A negative</option>
+                        <option value="B negative" {{ $UserData->type_of_blood_bank == 'B negative' ? 'selected' : '' }}>B negative</option>
+                        <option value="AB negative" {{ $UserData->type_of_blood_bank == 'AB negative' ? 'selected' : '' }}>AB negative</option>
+                      </select>
+                    </div>
+                  </div>
+                  @else
+                  <div class="form-group row type_of_blood_bank" style="display:none;">
+                    <label for="type_of_blood_bank" class="col-sm-2 col-form-label">Type of Blood :-</label>
+                    <div class="col-sm-6">
+                      <select name="type_of_blood_bank" id="type_of_blood_bank"  class="form-control" >
+                        <option value="">--Select Type blood--</option>
+                        <option value="O negative" {{ $UserData->type_of_blood_bank == 'O negative' ? 'selected' : '' }}>O negative</option>
+                        <option value="A negative" {{ $UserData->type_of_blood_bank == 'A negative' ? 'selected' : '' }}>A negative</option>
+                        <option value="B negative" {{ $UserData->type_of_blood_bank == 'B negative' ? 'selected' : '' }}>B negative</option>
+                        <option value="AB negative" {{ $UserData->type_of_blood_bank == 'AB negative' ? 'selected' : '' }}>AB negative</option>
+                      </select>
+                    </div>
+                  </div>
+                  @endif
 
                   <div class="form-group row">
                     <label for="state_id" class="col-sm-2 col-form-label">State Name :-</label>
@@ -155,7 +242,21 @@
                       </select>
                     </div>
                   </div>
-
+                  @if($UserData->login_type == 4)
+                  <div class="form-group row">
+                    <label for="blood_bank_history" class="col-sm-2 col-form-label">History :-</label>
+                    <div class="col-sm-6">
+                    <input id="blood_bank_history" name="blood_bank_history" value="{{$UserData->blood_bank_history}}" type="text" class="form-control" >
+                    </div>
+                  </div>
+                  @else
+                  <div class="form-group row blood_bank_history" style="display:none;">
+                    <label for="blood_bank_history" class="col-sm-2 col-form-label">History :-</label>
+                    <div class="col-sm-6">
+                    <input id="blood_bank_history" name="blood_bank_history" value="{{$UserData->blood_bank_history}}" type="text" class="form-control" >
+                    </div>
+                  </div>
+                  @endif
 
                   <div class="form-group row">
                     <label for="gender" class="col-sm-2 col-form-label">Gender :-</label>
@@ -164,18 +265,19 @@
                       <input type="radio" name="gender" id="gender" value="2" {{ $UserData->gender == '2' ? 'checked' : '' }}> Female 
                     </div>
                   </div>
+                  @if($UserData->login_type == 2)
                   
                   <div class="form-group row">
                     <label for="profession" class="col-sm-2 col-form-label">Profession :-</label>
                     <div class="col-sm-6">
-                    <input id="profession" name="profession" value="{{$UserData->profession}}" type="text" class="form-control" required="true">
+                    <input id="profession" name="profession" value="{{$UserData->profession}}" type="text" class="form-control" >
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <label for="blood_group" class="col-sm-2 col-form-label">Blood Group :-</label>
                     <div class="col-sm-6">
-                    <input id="blood_group" name="blood_group" value="{{$UserData->blood_group}}" type="text" class="form-control" required="true">
+                    <input id="blood_group" name="blood_group" value="{{$UserData->blood_group}}" type="text" class="form-control" >
                     </div>
                   </div>
                   
@@ -186,12 +288,44 @@
                       <input type="radio" name="is_interested" id="is_interested" value="0" {{ $UserData->is_interested == '0' ? 'checked' : '' }}> No 
                     </div>
                   </div>
+                  @else
+                  
+                  <div class="form-group row profession" style="display:none;">
+                    <label for="profession" class="col-sm-2 col-form-label">Profession :-</label>
+                    <div class="col-sm-6">
+                    <input id="profession" name="profession" value="{{$UserData->profession}}" type="text" class="form-control" >
+                    </div>
+                  </div>
 
+                  <div class="form-group row blood_group" style="display:none;">
+                    <label for="blood_group" class="col-sm-2 col-form-label">Blood Group :-</label>
+                    <div class="col-sm-6">
+                    <input id="blood_group" name="blood_group" value="{{$UserData->blood_group}}" type="text" class="form-control" >
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row is_interested" style="display:none;">
+                    <label for="is_interested" class="col-sm-2 col-form-label">Interested in Blood Donation* :-</label>
+                    <div class="col-sm-6">
+                      <input type="radio" name="is_interested" id="is_interested" value="1" {{ $UserData->is_interested == '1' ? 'checked' : '' }}> Yes
+                      <input type="radio" name="is_interested" id="is_interested" value="0" {{ $UserData->is_interested == '0' ? 'checked' : '' }}> No 
+                    </div>
+                  </div>
+                  @endif
                   
                   <div class="form-group row">
                       <div class="col-sm-6 col-md-offset-3 text-center">
                         <button type="submit" name="submit" class="btn btn-primary">Save</button>
+                        <?php  $type =  request()->type; ?>
+                        @if(isset($type) && $type !='') 
+                        @if($type ==0)
                         <a class="btn btn-danger" href="{{url('admin/user')}}">Cancel</a>
+                        @elseif($type ==1)
+                        <a class="btn btn-danger" href="{{url('admin/userngo')}}">Cancel</a>
+                        @elseif($type ==2)
+                        <a class="btn btn-danger" href="{{url('admin/userblood')}}">Cancel</a>
+                        @endif
+                        @endif
                       </div>
                   </div>
                 </div>
@@ -240,6 +374,42 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key={{Helper::AppMapKey()}}&callback=initMap"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(e) {
+  $(".login_type").change(function(){
+    var type=$("#login_type").val();
+    // alert(type);
+    if(type == 2)
+    {
+      $(".profession").show();
+      $(".blood_group").show();
+      $(".is_interested").show();
+      $(".type_of_ngo").hide();
+      $(".type_of_blood_bank").hide();
+      $(".blood_bank_history").hide();
+  
+    }else if(type == 3)
+    {
+      $(".profession").hide();
+      $(".blood_group").hide();
+      $(".is_interested").hide();
+      $(".type_of_ngo").show();
+      $(".type_of_blood_bank").hide();
+      $(".blood_bank_history").hide();
+    }else if(type == 4)
+    {
+      $(".profession").hide();
+      $(".blood_group").hide();
+      $(".is_interested").hide();
+      $(".type_of_ngo").hide();
+      $(".type_of_blood_bank").show();
+      $(".blood_bank_history").show();
+    }
+  });
+});
+</script>
 <script type="text/javascript">
   $(document).on('click', '.remove_activity', function() {
       $(this).closest('.row').remove();

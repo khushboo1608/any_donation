@@ -15,10 +15,10 @@ class CreatePhotosTable extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->string('photo_id')->unique()->primary();
-            $table->string('ngo_bank_id');
+            $table->integer('user_id');
             $table->string('photo_name');
             $table->string('photo_url');
-            $table->tinyInteger('photo_type')->default(0)->comment('1: ngo, 2: blood_bank ');          
+            $table->tinyInteger('photo_type')->default(0)->comment('3: ngo, 4: blood_bank');          
             $table->tinyInteger('photo_status')->default(0)->comment('0: enable, 1:disable'); 
             $table->timestamps();
         });

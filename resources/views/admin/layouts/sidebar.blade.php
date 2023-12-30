@@ -20,19 +20,63 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item ">
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-cogs"></i>
+              <p>
+              User Role
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url('admin/user')}}" class="nav-link {{ Request::segment(2) == 'user'? 'active':'' }}">
+                  <i class="fa fa-gear nav-icon"></i>
+                  <p>Users</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('admin/userngo')}}" class="nav-link {{ Request::segment(2) == 'userngo'? 'active':'' }}">
+                  <i class="fa fa-file-o nav-icon"></i>
+                  <p>NGO</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('admin/userblood')}}" class="nav-link {{ Request::segment(2) == 'userblood'? 'active':'' }}">
+                  <i class="fa fa-file-o nav-icon"></i>
+                  <p>Blood Bank</p>
+                </a>
+              </li>
+            </ul>
+          </li>  
+
+          <!-- <li class="nav-item ">
             <a href="{{ url('admin/user')}}" class="nav-link {{ Request::segment(2) == 'user'? 'active':'' }}">
               <i class="nav-icon  fa fa-user"></i>
               <p>Users</p>
             </a>
-          </li>   
+          </li>    -->
           <!-- <li class="nav-item">
             <a href="{{ url('admin/subadmin')}}" class="nav-link {{ Request::segment(2) == 'subadmin'? 'active':'' }}">
               <i class="nav-icon  fa fa-users"></i>
               <p>Sub Admin</p>
             </a>
           </li>    -->
-         
+          <li class="nav-item">
+            <a href="{{ url('admin/photos')}}" class="nav-link {{ Request::segment(2) == 'photos'? 'active':'' }}">
+            <i class="nav-icon fa fa-image"></i> 
+              <p>Photos</p>
+            </a>
+          </li> 
+
+          <li class="nav-item">
+            <a href="{{ url('admin/videos')}}" class="nav-link {{ Request::segment(2) == 'videos'? 'active':'' }}">
+            <i class="nav-icon fa fa-image"></i> 
+              <p>Videos</p>
+            </a>
+          </li> 
+
           <li class="nav-item">
             <a href="{{ url('admin/banner')}}" class="nav-link {{ Request::segment(2) == 'banner'? 'active':'' }}">
             <i class="nav-icon fa fa-image"></i> 
@@ -70,6 +114,7 @@
               </li>
             </ul>
           </li>  
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

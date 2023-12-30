@@ -20,6 +20,9 @@ use App\Http\Controllers\Admin\AdminDiscountController;
 use App\Http\Controllers\Admin\AdminCollectionController;
 use App\Http\Controllers\Web\Main;
 use App\Http\Controllers\Web\WebHomeController;
+use App\Http\Controllers\Admin\AdminPhotoController;
+use App\Http\Controllers\Admin\AdminVideoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -76,19 +79,49 @@ Route::group(['prefix' => 'admin'], function () {
         
         //User
         Route::get('/user',                       [AdminUserController::class, 'index'])->name('admin.user');
-        Route::get('/add_user',    [AdminUserController::class,'add_user']);
+        Route::get('/add_user/{type}',    [AdminUserController::class,'add_user']);
         Route::post('user/saveuser',   [AdminUserController::class,'saveuser'])->name('user.saveuser');
         Route::post('/user_delete',    [AdminUserController::class, 'user_delete'])->name('admin.delete-user');
         Route::post('/user_status',  [AdminUserController::class, 'user_status'])->name('admin.user_status');
         Route::post('/user_verified',  [AdminUserController::class, 'user_verified'])->name('admin.user_verified');
         //route set by khushboo
         Route::post('/fetch_city', [AdminUserController::class, 'fetchCity'])->name('admin.fetch_city');
+        Route::post('/user_approved',  [AdminUserController::class, 'user_approved'])->name('admin.user_approved');
+        Route::get('/userngo', [AdminUserController::class, 'userngo_index'])->name('admin.userngo_index');
+        Route::get('/userblood', [AdminUserController::class, 'userblood_index'])->name('admin.userblood_index');
 
+        //photos
+        Route::get('/photos',[AdminPhotoController::class, 'index'])->name('admin.photos');
+        Route::get('/add_photos',[AdminPhotoController::class, 'add_photos'])->name('admin.add_photos');
+        Route::post('photos/savephotos',[AdminPhotoController::class, 'savephotos'])->name('photos.savephotos');
+        Route::post('/fetch_user', [AdminPhotoController::class, 'fetchUser'])->name('admin.fetch_user');
+        Route::post('/photos_delete', [AdminPhotoController::class, 'photos_delete'])->name('admin.photos_delete');
+        Route::post('/photo_status',   [AdminPhotoController::class, 'photo_status'])->name('admin.photo_status');
+        Route::post('/photos_multi_status', [AdminPhotoController::class, 'photos_multi_status'])->name('admin.photos_multi_status');
+        Route::get('/photos/edit/{id}', [AdminPhotoController::class, 'photo_data_edit'])->name('admin.photo_data_edit');
+
+        //video
+        Route::get('/videos',[AdminVideoController::class, 'index'])->name('admin.videos');
+        Route::get('/add_videos',[AdminVideoController::class, 'add_videos'])->name('admin.add_videos');
+        Route::post('videos/savevideos',[AdminVideoController::class, 'savevideos'])->name('videos.savevideos');
+        Route::post('/videos_delete', [AdminVideoController::class, 'videos_delete'])->name('admin.videos_delete');
+        Route::post('/videos_status',   [AdminVideoController::class, 'videos_status'])->name('admin.videos_status');
+        Route::post('/videos_multi_status', [AdminVideoController::class, 'videos_multi_status'])->name('admin.videos_multi_status');
+        Route::get('/videos/edit/{id}', [AdminVideoController::class, 'video_data_edit'])->name('admin.video_data_edit');
+
+
+
+
+
+
+
+        
+        
         Route::post('/user_multi_status', [AdminUserController::class, 'user_multi_status'])->name('admin.user_multi_status');
 
         Route::post('/user_details',              [AdminUserController::class, 'user_details'])->name('admin.user-details');
         Route::get('user/userdatadetails/{id}',   [AdminUserController::class, 'user_data_details'])->name('userdatadetails');  
-        Route::get('user/edit/{id}',   [AdminUserController::class, 'user_data_edit'])->name('userdataedit');
+        Route::get('user/edit/{id}/{type}',   [AdminUserController::class, 'user_data_edit'])->name('userdataedit');
         Route::get('userfile-export',   [AdminUserController::class, 'userfileexport'])->name('userfile-export');        
   
        // Category
