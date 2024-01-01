@@ -106,9 +106,16 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ url('admin/eye_donations')}}" class="nav-link {{ Request::segment(2) == 'eye_donations'? 'active':'' }}">
+            <a href="{{ url('admin/eye_donation')}}" class="nav-link {{ Request::segment(2) == 'eye_donation'? 'active':'' }}">
             <i class="nav-icon fa fa-image"></i> 
               <p>Eye Donations</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ url('admin/event_promotions')}}" class="nav-link {{ Request::segment(2) == 'event_promotions'? 'active':'' }}">
+            <i class="nav-icon fa fa-image"></i> 
+              <p>Event Promotions</p>
             </a>
           </li>
 

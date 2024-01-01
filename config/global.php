@@ -16,6 +16,9 @@ return [
         'gallary_image'  => 'images/app/gallary_image',
         'color_image'  => 'images/app/color_image',
         'photo_image'  => 'images/app/photo_image',
+        'event_image'  => 'images/app/event_image',
+        'eyedonation_image'  => 'images/app/eyedonation_image',
+        
     ],
     'no_image' => [
         'no_user'   => env('APP_URL').'public/images/noimage/user-not-found.png',

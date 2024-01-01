@@ -37,12 +37,7 @@ class EyeDonation extends Model
         'eyedonation_image',
         'eyedonation_status',
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(App\Model\User::class, 'user_id');
-    }
-
+    
     public function state()
     {
         return $this->belongsTo(App\Model\State::class, 'state_id');

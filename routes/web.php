@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\AdminRequestDetailsController;
 use App\Http\Controllers\Admin\AdminSpecificNeedsDetailsController;
 use App\Http\Controllers\Admin\AdminServiceNeedsDetailsController;
 use App\Http\Controllers\Admin\AdminEventPromotionController;
+use App\Http\Controllers\Admin\AdminEyeDonationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -146,10 +147,28 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('service/saveservice',[AdminServiceNeedsDetailsController::class, 'saveservice'])->name('service.saveservice');
         Route::post('/service_delete', [AdminServiceNeedsDetailsController::class, 'service_delete'])->name('admin.service_delete');
         Route::post('/service_status',   [AdminServiceNeedsDetailsController::class, 'service_status'])->name('admin.service_status');
-        Route::post('/service_multi_status', [AdminServiceNeedsDetailsController::class, 'service_multi_status'])->name('admin._multi_status');
+        Route::post('/service_multi_status', [AdminServiceNeedsDetailsController::class, 'service_multi_status'])->name('admin.service_multi_status');
         Route::get('/service_needs/edit/{id}', [AdminServiceNeedsDetailsController::class, 'service_data_edit'])->name('admin.service_data_edit');
 
+        //event promotion
+        Route::get('/event_promotions',[AdminEventPromotionController::class, 'index'])->name('admin.event_promotions');
+        Route::get('/add_event_promotions',[AdminEventPromotionController::class, 'add_event_promotions'])->name('admin.add_event_promotions');
+        Route::post('event/saveevent',[AdminEventPromotionController::class, 'saveevent'])->name('event.saveevent');
+        Route::post('/event_promotions_delete', [AdminEventPromotionController::class, 'event_promotions_delete'])->name('admin.event_promotions_delete');
+        Route::post('/event_promotions_status',   [AdminEventPromotionController::class, 'event_promotions_status'])->name('admin.event_promotions_status');
+        Route::post('/event_promotions_multi_status', [AdminEventPromotionController::class, 'event_promotions_multi_status'])->name('admin.event_promotions_multi_status');
+        Route::get('/event_promotions/edit/{id}', [AdminEventPromotionController::class, 'event_data_edit'])->name('admin.event_data_edit');
 
+        //eye donation
+        Route::get('/eye_donation',[AdminEyeDonationController::class, 'index'])->name('admin.eye_donation');
+        Route::get('/add_eye_donation',[AdminEyeDonationController::class, 'add_eye_donation'])->name('admin.add_eye_donation');
+        Route::post('eye_donation/saveeyedonation',[AdminEyeDonationController::class, 'saveeyedonation'])->name('eye_donation.saveeyedonation');
+        Route::post('/eye_donation_delete', [AdminEyeDonationController::class, 'eye_donation_delete'])->name('admin.eye_donation_delete');
+        Route::post('/eye_donation_status',   [AdminEyeDonationController::class, 'eye_donation_status'])->name('admin.eye_donation_status');
+        Route::post('/eye_donation_multi_status', [AdminEyeDonationController::class, 'eye_donation_multi_status'])->name('admin.eye_donation_multi_status');
+        Route::get('/eye_donation/edit/{id}', [AdminEyeDonationController::class, 'eye_data_edit'])->name('admin.eye_data_edit');
+
+        
 
 
 
