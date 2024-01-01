@@ -22,7 +22,11 @@ use App\Http\Controllers\Web\Main;
 use App\Http\Controllers\Web\WebHomeController;
 use App\Http\Controllers\Admin\AdminPhotoController;
 use App\Http\Controllers\Admin\AdminVideoController;
-
+use App\Http\Controllers\Admin\AdminMemberDetailsController;
+use App\Http\Controllers\Admin\AdminRequestDetailsController;
+use App\Http\Controllers\Admin\AdminSpecificNeedsDetailsController;
+use App\Http\Controllers\Admin\AdminServiceNeedsDetailsController;
+use App\Http\Controllers\Admin\AdminEventPromotionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,13 +113,55 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/videos_multi_status', [AdminVideoController::class, 'videos_multi_status'])->name('admin.videos_multi_status');
         Route::get('/videos/edit/{id}', [AdminVideoController::class, 'video_data_edit'])->name('admin.video_data_edit');
 
-
-
-
-
-
-
+        //member details
+        Route::get('/member',[AdminMemberDetailsController::class, 'index'])->name('admin.member');
+        Route::get('/add_member',[AdminMemberDetailsController::class, 'add_member'])->name('admin.add_member');
+        Route::post('member/savemember',[AdminMemberDetailsController::class, 'savemember'])->name('member.savemember');
+        Route::post('/member_delete', [AdminMemberDetailsController::class, 'member_delete'])->name('admin.member_delete');
+        Route::post('/member_status',   [AdminMemberDetailsController::class, 'member_status'])->name('admin.member_status');
+        Route::post('/member_multi_status', [AdminMemberDetailsController::class, 'member_multi_status'])->name('admin.member_multi_status');
+        Route::get('/member/edit/{id}', [AdminMemberDetailsController::class, 'member_data_edit'])->name('admin.photo_data_edit');
         
+        //request details
+        Route::get('/request',[AdminRequestDetailsController::class, 'index'])->name('admin.request');
+        Route::get('/add_request',[AdminRequestDetailsController::class, 'add_request'])->name('admin.add_request');
+        Route::post('request/saverequest',[AdminRequestDetailsController::class, 'saverequest'])->name('request.saverequest');
+        Route::post('/request_delete', [AdminRequestDetailsController::class, 'request_delete'])->name('admin.request_delete');
+        Route::post('/request_status',   [AdminRequestDetailsController::class, 'request_status'])->name('admin.request_status');
+        Route::post('/request_multi_status', [AdminRequestDetailsController::class, 'request_multi_status'])->name('admin.request_multi_status');
+        Route::get('/request/edit/{id}', [AdminRequestDetailsController::class, 'request_data_edit'])->name('admin.request_data_edit');
+
+        //specific_needs
+        Route::get('/specific_needs',[AdminSpecificNeedsDetailsController::class, 'index'])->name('admin.specific_needs');
+        Route::get('/add_specific',[AdminSpecificNeedsDetailsController::class, 'add_specific'])->name('admin.add_specific');
+        Route::post('specific/savespecific',[AdminSpecificNeedsDetailsController::class, 'savespecific'])->name('specific.savespecific');
+        Route::post('/specific_delete', [AdminSpecificNeedsDetailsController::class, 'specific_delete'])->name('admin.specific_delete');
+        Route::post('/specific_status',   [AdminSpecificNeedsDetailsController::class, 'specific_status'])->name('admin.specific_status');
+        Route::post('/specific_multi_status', [AdminSpecificNeedsDetailsController::class, 'specific_multi_status'])->name('admin.specific_multi_status');
+        Route::get('/specific_needs/edit/{id}', [AdminSpecificNeedsDetailsController::class, 'specific_data_edit'])->name('admin.specific_data_edit');
+        
+        //service_needs
+        Route::get('/service_needs',[AdminServiceNeedsDetailsController::class, 'index'])->name('admin.service_needs');
+        Route::get('/add_service',[AdminServiceNeedsDetailsController::class, 'add_service'])->name('admin.add_service');
+        Route::post('service/saveservice',[AdminServiceNeedsDetailsController::class, 'saveservice'])->name('service.saveservice');
+        Route::post('/service_delete', [AdminServiceNeedsDetailsController::class, 'service_delete'])->name('admin.service_delete');
+        Route::post('/service_status',   [AdminServiceNeedsDetailsController::class, 'service_status'])->name('admin.service_status');
+        Route::post('/service_multi_status', [AdminServiceNeedsDetailsController::class, 'service_multi_status'])->name('admin._multi_status');
+        Route::get('/service_needs/edit/{id}', [AdminServiceNeedsDetailsController::class, 'service_data_edit'])->name('admin.service_data_edit');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         Route::post('/user_multi_status', [AdminUserController::class, 'user_multi_status'])->name('admin.user_multi_status');
 

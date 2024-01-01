@@ -78,6 +78,42 @@
           </li> 
 
           <li class="nav-item">
+            <a href="{{ url('admin/member')}}" class="nav-link {{ Request::segment(2) == 'member'? 'active':'' }}">
+            <i class="nav-icon fa fa-image"></i> 
+              <p>Member Details</p>
+            </a>
+          </li> 
+
+          <li class="nav-item">
+            <a href="{{ url('admin/request')}}" class="nav-link {{ Request::segment(2) == 'request'? 'active':'' }}">
+            <i class="nav-icon fa fa-image"></i> 
+              <p>Request Details</p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="{{ url('admin/specific_needs')}}" class="nav-link {{ Request::segment(2) == 'specific_needs'? 'active':'' }}">
+            <i class="nav-icon fa fa-image"></i> 
+              <p>Specific Needs</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ url('admin/service_needs')}}" class="nav-link {{ Request::segment(2) == 'service_needs'? 'active':'' }}">
+            <i class="nav-icon fa fa-image"></i> 
+              <p>Service Needs</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ url('admin/eye_donations')}}" class="nav-link {{ Request::segment(2) == 'eye_donations'? 'active':'' }}">
+            <i class="nav-icon fa fa-image"></i> 
+              <p>Eye Donations</p>
+            </a>
+          </li>
+
+
+          <li class="nav-item">
             <a href="{{ url('admin/banner')}}" class="nav-link {{ Request::segment(2) == 'banner'? 'active':'' }}">
             <i class="nav-icon fa fa-image"></i> 
               <p>Banners</p>

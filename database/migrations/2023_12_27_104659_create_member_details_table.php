@@ -15,7 +15,7 @@ class CreateMemberDetailsTable extends Migration
     {
         Schema::create('member_details', function (Blueprint $table) {
             $table->string('member_details_id')->unique()->primary();
-            $table->string('ngo_id');
+            $table->integer('user_id');
             $table->string('member_name');   
             $table->string('member_image');            
             $table->string('member_phone_number');       

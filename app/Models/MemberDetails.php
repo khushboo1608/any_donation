@@ -15,7 +15,7 @@ class MemberDetails extends Model
 
     protected $fillable = [
         'member_details_id',
-        'ngo_id',
+        'user_id',
         'member_name',
         'member_image',
         'member_phone_number',
@@ -24,6 +24,6 @@ class MemberDetails extends Model
            
     ];
     public function User() {
-        return $this->hasOne('App\Models\User', 'id', 'ngo_id');
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
 }
