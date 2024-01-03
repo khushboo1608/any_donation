@@ -102,6 +102,7 @@
                             <th></th>
                             <th>No</th>
                             <th>User Name</th>
+                            <th>Type</th>
                             <th>Image</th>
                             <th>Photo Name</th>
                             <th>Status</th>
@@ -166,7 +167,8 @@
             columns: [
             {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},   
-                {data: 'user_name', name: 'user_name'},         
+                {data: 'user_name', name: 'user_name'},  
+                {data: 'photo_type', name: 'photo_type'},       
                 {data: 'photo_url', name: 'photo_url', orderable: false, searchable: false,render:function (data, type, row) {return  "<img style='height:50px;width:50px;border-radius: 25px;' src='"+data+"'>"}},
                 {data: 'photo_name', name: 'photo_name'},
                 {data: 'photo_status', name: 'photo_status'},

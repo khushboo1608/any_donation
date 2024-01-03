@@ -34,6 +34,16 @@ class AdminVideoController extends Controller
             ->addColumn('checkbox', function ($data) {
                 return '<input type="checkbox" id="checkbox'.$data->video_id.'"  value="'.$data->video_id.'"  name="video_ids[]" class="video_ids" />';
             })
+            ->editColumn('video_type', function ($data){
+                $type = '';
+                if($data['video_type'] == 3)
+                {
+                    $type = 'NGO';
+                }else if($data['video_type'] == 4){
+                    $type = 'Blood Bank';
+                }
+                return $type;
+            })
             ->addColumn('video_status', function ($data) {
                 $btn1='';
                 $checked = ($data['video_status'] == 1) ? "" : "checked";

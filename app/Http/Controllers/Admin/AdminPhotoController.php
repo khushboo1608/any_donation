@@ -33,6 +33,16 @@ class AdminPhotoController extends Controller
             ->addColumn('checkbox', function ($data) {
                 return '<input type="checkbox" id="checkbox'.$data->photo_id.'"  value="'.$data->photo_id.'"  name="photo_ids[]" class="photo_ids" />';
             })
+            ->editColumn('photo_type', function ($data){
+                $type = '';
+                if($data['photo_type'] == 3)
+                {
+                    $type = 'NGO';
+                }else if($data['photo_type'] == 4){
+                    $type = 'Blood Bank';
+                }
+                return $type;
+            })
             ->editColumn('photo_url', function ($data) {
                 $photo_url = $this->GetImage($file_name = $data->photo_url,$path=config('global.file_path.photo_image'));
                 

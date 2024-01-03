@@ -119,6 +119,13 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a href="{{ url('admin/crowd_funding')}}" class="nav-link {{ Request::segment(2) == 'crowd_funding'? 'active':'' }}">
+            <i class="nav-icon fa fa-image"></i> 
+              <p>Crowd Fundings</p>
+            </a>
+          </li>
+
 
           <li class="nav-item">
             <a href="{{ url('admin/banner')}}" class="nav-link {{ Request::segment(2) == 'banner'? 'active':'' }}">

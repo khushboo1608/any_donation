@@ -28,6 +28,8 @@ use App\Http\Controllers\Admin\AdminSpecificNeedsDetailsController;
 use App\Http\Controllers\Admin\AdminServiceNeedsDetailsController;
 use App\Http\Controllers\Admin\AdminEventPromotionController;
 use App\Http\Controllers\Admin\AdminEyeDonationController;
+use App\Http\Controllers\Admin\AdminCrowdFundingController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -168,8 +170,15 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/eye_donation_multi_status', [AdminEyeDonationController::class, 'eye_donation_multi_status'])->name('admin.eye_donation_multi_status');
         Route::get('/eye_donation/edit/{id}', [AdminEyeDonationController::class, 'eye_data_edit'])->name('admin.eye_data_edit');
 
-        
-
+        //crowd funding
+        Route::get('/crowd_funding',[AdminCrowdFundingController::class, 'index'])->name('admin.crowd_funding');
+        Route::get('/add_crowd_funding',[AdminCrowdFundingController::class, 'add_crowd_funding'])->name('admin.add_crowd_funding');
+        Route::post('crowd_funding/savecrowdfunding',[AdminCrowdFundingController::class, 'savecrowdfunding'])->name('crowd_funding.savecrowdfunding');
+        Route::post('/crowd_funding_delete', [AdminCrowdFundingController::class, 'crowd_funding_delete'])->name('admin.crowd_funding_delete');
+        Route::post('/crowd_funding_status',   [AdminCrowdFundingController::class, 'crowd_funding_status'])->name('admin.crowd_funding_status');
+        Route::post('/crowd_funding_multi_status', [AdminCrowdFundingController::class, 'crowd_funding_multi_status'])->name('admin.crowd_funding_multi_status');
+        Route::get('/crowd_funding/edit/{id}', [AdminCrowdFundingController::class, 'crowd_data_edit'])->name('admin.crowd_data_edit');
+        Route::get('crowd_funding/delete_img/{id}/{img_id}', [AdminCrowdFundingController::class, 'crowd_delete_img'])->name('admin.crowd_delete_img');
 
 
 

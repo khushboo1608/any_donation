@@ -18,6 +18,7 @@ return [
         'photo_image'  => 'images/app/photo_image',
         'event_image'  => 'images/app/event_image',
         'eyedonation_image'  => 'images/app/eyedonation_image',
+        'crowd_image' => 'images/app/crowd_image',
         
     ],
     'no_image' => [

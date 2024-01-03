@@ -20,12 +20,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Video</h1>
+            <h1> Crowd Funding</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{url('admin/home')}}">Home</a></li>
-              <li class="breadcrumb-item active">Video</li>
+              <li class="breadcrumb-item active"> Crowd Funding</li>
             </ol>
           </div>
         </div>
@@ -41,12 +41,12 @@
               <div class="card-header">
               
               <div class="col-md-5 col-xs-12">
-                <h3 class="card-title">Manage Video</h3>
+                <h3 class="card-title">Manage CrowdFunding</h3>
               </div>
               <div class="col-md-12 col-xs-12">
                     <div class="search_list">
                         <div class="add_btn_primary">
-                            <a href="{{url('admin/add_videos')}}">Add Video</a> &nbsp;&nbsp;
+                            <a href="{{url('admin/add_crowd_funding')}}">Add CrowdFunding</a> &nbsp;&nbsp;
                         </div>
                     </div>
                 </div>    
@@ -101,9 +101,11 @@
                         <tr>
                             <th></th>
                             <th>No</th>
-                            <th>User Name</th>
-                            <th>Type</th>
-                            <th>Video Url's</th>
+                            <th>Title</th>
+                            <th>Purpose</th>
+                            <th>Address</th>
+                            <th>Issue</th>
+                            <th>Amount</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -149,7 +151,7 @@
         var table = $('#example1').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{url('admin/videos') }}",
+            ajax: "{{url('admin/crowd_funding') }}",
             
             'columnDefs': [
                 {
@@ -165,31 +167,33 @@
             "order": [[ 1, 'asc' ]],
             columns: [
             {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
-                {data: 'DT_RowIndex', name: 'DT_RowIndex'},  
-                {data: 'user_name', name: 'user_name'},  
-                {data: 'video_type', name: 'video_type'},        
-                {data: 'video_url', name: 'video_url'},
-                {data: 'video_status', name: 'video_status'},
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},   
+                {data: 'crowdfundings_title', name: 'crowdfundings_title'},
+                {data: 'crowdfundings_purpose', name: 'crowdfundings_purpose'},         
+                {data: 'crowdfundings_address', name: 'crowdfundings_address'},
+                {data: 'crowdfundings_issue', name: 'crowdfundings_issue'},
+                {data: 'crowdfundings_amount', name: 'crowdfundings_amount'},
+                {data: 'crowdfundings_status', name: 'crowdfundings_status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
     
     });
-    function DeleteVideos(videosId)
+    function DeleteCrowd(crowdId)
     {
         swal({
             title: "Are you sure ??",
-            text: "You will not be able to recover this Video!",
+            text: "You will not be able to recover this crowd!",
             icon: "warning",
             buttons: true,
             dangerMode: true,
         }).then((willDelete) => {
           if (willDelete) {
-                var delurl = "{{url('admin/videos_delete')}}";
+                var delurl = "{{url('admin/crowd_funding_delete')}}";
                 $.ajax({
                     url: delurl,
                     type: "post",
-                    data: {"_token": "{{ csrf_token() }}",'id': videosId},
+                    data: {"_token": "{{ csrf_token() }}",'id': crowdId},
                     dataType: 'json',
                     success: function (data) {
                         if (data.result == true)
@@ -203,7 +207,7 @@
                     error: function (request, status, error) {
                         if(request.status == 419)
                         {
-                            location.href = "{{url('admin/videos')}}";
+                            location.href = "{{url('admin/crowd_funding')}}";
                         }
                     }
                 });
@@ -211,7 +215,7 @@
         });
     }
 
-    function Status(videoId,status)
+    function Status(crowdId,status)
     {
         console.log(status);
         if(status == 0)
@@ -226,17 +230,17 @@
         }
         swal({
             title: "Are you sure ?",
-            text: "You want to "+btn_text+" this video!",
+            text: "You want to "+btn_text+" this crowd!",
             icon: "warning",
             buttons: true,
             dangerMode: true,
         }).then((willDelete) => {
           if (willDelete) {
-                var delurl = "{{url('admin/videos_status')}}";
+                var delurl = "{{url('admin/crowd_funding_status')}}";
                 $.ajax({
                     url: delurl,
                     type: "post",
-                    data: {"_token": "{{ csrf_token() }}",'id': videoId,'video_status':status},
+                    data: {"_token": "{{ csrf_token() }}",'id': crowdId,'crowd_status':status},
                     dataType: 'json',
                     success: function (data) {
                         if (data.result == true)
@@ -250,7 +254,7 @@
                     error: function (request, status, error) {
                         if(request.status == 419)
                         {
-                            location.href = "{{url('admin/videos')}}";
+                            location.href = "{{url('admin/crowd_funding')}}";
                         }
                     }
                 });
@@ -261,7 +265,7 @@
     $(".actions").click(function(e){
       e.preventDefault();
 
-      var _ids = $.map($('.video_ids:checked'), function(c){return c.value; });
+      var _ids = $.map($('.crowdfundings_ids:checked'), function(c){return c.value; });
       var _action=$(this).data("action");
       
      
@@ -275,7 +279,7 @@
             dangerMode: true,
         }).then((willDelete) => {
           if (willDelete) {
-                var delurl = "{{url('admin/videos_multi_status')}}";
+                var delurl = "{{url('admin/crowd_funding_multi_status')}}";
                 $.ajax({
                     url: delurl,
                     type: "post",
@@ -294,7 +298,7 @@
                     error: function (request, status, error) {
                         if(request.status == 419)
                         {
-                            location.href = "{{url('admin/videos')}}";
+                            location.href = "{{url('admin/crowd_funding')}}";
                         }
                     }
                 });
@@ -302,7 +306,7 @@
         });
       }
       else{
-        swal({title: 'Sorry no video selected!', type: 'info'});
+        swal({title: 'Sorry no croed funding selected!', type: 'info'});
       }
     });
 
@@ -311,7 +315,7 @@
       totalItems=0;
 
       $('input:checkbox').not(this).prop('checked', this.checked);
-      $.each($("input[name='video_ids[]']:checked"), function(){
+      $.each($("input[name='crowdfundings_ids[]']:checked"), function(){
         totalItems=totalItems+1;
       });
 
