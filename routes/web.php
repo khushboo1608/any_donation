@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\AdminServiceNeedsDetailsController;
 use App\Http\Controllers\Admin\AdminEventPromotionController;
 use App\Http\Controllers\Admin\AdminEyeDonationController;
 use App\Http\Controllers\Admin\AdminCrowdFundingController;
+use App\Http\Controllers\Admin\AdminNgoController;
 
 
 /*
@@ -180,8 +181,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/crowd_funding/edit/{id}', [AdminCrowdFundingController::class, 'crowd_data_edit'])->name('admin.crowd_data_edit');
         Route::get('crowd_funding/delete_img/{id}/{img_id}', [AdminCrowdFundingController::class, 'crowd_delete_img'])->name('admin.crowd_delete_img');
 
-
-
+        //ngo
+        Route::get('/ngo',[AdminNgoController::class, 'index'])->name('admin.ngo');
+        Route::get('/add_ngo',[AdminNgoController::class, 'add_ngo'])->name('admin.add_ngo');
+        Route::post('ngo/savengo',[AdminNgoController::class, 'savengo'])->name('ngo.savengo');
+        Route::post('/ngo_delete', [AdminNgoController::class, 'ngo_delete'])->name('admin.ngo_delete');
+        Route::post('/ngo_status',   [AdminNgoController::class, 'ngo_status'])->name('admin.ngo_status');
+        Route::post('/ngo_multi_status', [AdminNgoController::class, 'ngo_multi_status'])->name('admin.ngo_multi_status');
+        Route::get('/ngo/edit/{id}', [AdminNgoController::class, 'ngo_data_edit'])->name('admin.ngo_data_edit');
 
 
 

@@ -126,6 +126,13 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a href="{{ url('admin/ngo')}}" class="nav-link {{ Request::segment(2) == 'ngo'? 'active':'' }}">
+            <i class="nav-icon fa fa-image"></i> 
+              <p>NGO</p>
+            </a>
+          </li>
+
 
           <li class="nav-item">
             <a href="{{ url('admin/banner')}}" class="nav-link {{ Request::segment(2) == 'banner'? 'active':'' }}">

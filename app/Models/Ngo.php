@@ -24,7 +24,7 @@ class Ngo extends Model
         'address_proof',
         'jj_act',
         'form_10_b',
-        '12a_certificate',
+        'a12_certificate',
         'cancelled_blank_cheque',
         'pan_of_ngo',
         'registration_certificate', 

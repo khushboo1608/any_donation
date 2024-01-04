@@ -19,7 +19,7 @@ return [
         'event_image'  => 'images/app/event_image',
         'eyedonation_image'  => 'images/app/eyedonation_image',
         'crowd_image' => 'images/app/crowd_image',
-        
+        'ngo_image' => 'images/app/ngo_image',
     ],
     'no_image' => [
         'no_user'   => env('APP_URL').'public/images/noimage/user-not-found.png',

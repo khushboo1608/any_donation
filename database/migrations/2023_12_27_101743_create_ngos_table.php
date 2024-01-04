@@ -25,7 +25,7 @@ class CreateNgosTable extends Migration
             $table->string('address_proof')->nullable();
             $table->string('jj_act')->nullable();
             $table->string('form_10_b')->nullable();
-            $table->string('12a_certificate')->nullable();
+            $table->string('a12_certificate')->nullable();
             $table->string('cancelled_blank_cheque')->nullable();
             $table->string('pan_of_ngo')->nullable();
             $table->string('registration_certificate')->nullable();
