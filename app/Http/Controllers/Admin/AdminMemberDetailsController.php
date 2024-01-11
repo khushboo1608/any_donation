@@ -30,11 +30,8 @@ class AdminMemberDetailsController extends Controller
         if ($request->ajax()) {
             // print_r($data); die;
             return datatables()::of($this->dataTable->all($request))
-<<<<<<< HEAD
             ->addIndexColumn()
-=======
             
->>>>>>> 2af6c6aed93380493e5097eb83cef30bc026acce
             ->addColumn('checkbox', function ($data) {
                 return '<input type="checkbox" id="checkbox'.$data->member_details_id.'"  value="'.$data->member_details_id.'"  name="member_ids[]" class="member_ids" />';
             })
@@ -70,10 +67,7 @@ class AdminMemberDetailsController extends Controller
 
                  return $btn;
          })
-<<<<<<< HEAD
-=======
             ->addIndexColumn()
->>>>>>> 2af6c6aed93380493e5097eb83cef30bc026acce
             ->rawColumns(['action','member_details_status','checkbox'])
             ->make(true);
         }
